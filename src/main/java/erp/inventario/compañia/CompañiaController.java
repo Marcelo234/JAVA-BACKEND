@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/compañia")
 @CrossOrigin({"*"})
+@Tag(name = "Controlador de las compañias, tabla (Compañia)")
 public class CompañiaController {
     
     @Autowired

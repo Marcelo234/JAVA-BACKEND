@@ -16,19 +16,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/producto")
 @CrossOrigin({"*"})
+@Tag(name = "Controlador de los productos, tabla (Producto)")
 public class ProductoController {
     
     @Autowired
     ProductoService service;
 
+    @Operation(summary = "Obtiene un producto con su id")
     @GetMapping("/{id}/")
     public Producto findById(@PathVariable long id){
         return service.findById(id);
     }
 
+    @Operation(summary = "Obtiene todos los productos")
     @GetMapping("/")
     public List<Producto> findAll(){
         return service.findAll();
@@ -36,21 +42,25 @@ public class ProductoController {
 
     //Create
     //Delimitador de acceso (public, private), tipo de dato de retorno, nombre del metodo, parametros de entrada(Sentencias)
+    @Operation(summary = "Guarda un nuevo producto")
     @PostMapping("/")
     public Producto save( @RequestBody Producto entity ){
         return service.save(entity);
     }
 
+    @Operation(summary = "Actualiza un producto con su id")
     @PutMapping("/")
     public Producto update ( @RequestBody Producto entity ){
         return service.save(entity);
     }
 
+    @Operation(summary = "Elimina un producto con su id")
     @DeleteMapping("/{id}/")
     public void deleteById(@PathVariable long id){
         service.deleteById(id);
     }
 
+    @Operation(summary = "Altualiza un producto con su id")
     @PatchMapping("/{id}/")
     public Producto partiaUpdate(@PathVariable long id, @RequestBody Map<String, Object> fields){
         Producto producto = findById(id);
