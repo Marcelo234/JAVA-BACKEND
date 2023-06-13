@@ -1,11 +1,9 @@
 package erp.inventario.usuarios;
 
-import erp.inventario.roles.Roles;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -18,6 +16,4 @@ public class Usuarios {
     private String correoElectronico;
     private String contraseña;
 
-    @ManyToOne
-    private Roles roles;
 }
