@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,7 @@ public class ProductoController {
     }
 
     @Operation(summary = "Obtiene todos los productos")
+    @PreAuthorize("hasAuthority('producto_leertodos')")
     @GetMapping("/")
     public List<Producto> findAll(){
         return service.findAll();
