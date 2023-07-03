@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -67,7 +70,9 @@ public class CompañiaController {
         try {
             Field campoEntidad = Compañia.class.getDeclaredField(fieldName);
             campoEntidad.setAccessible(true);
-            campoEntidad.set(entity, fieldValue);
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            campoEntidad.set(entity, mapper.convertValue(fieldValue, campoEntidad.getType()));
         } catch (NoSuchFieldException | IllegalAccessException ex){
             //maneja la excepcion si ocurre algun erros al acceder al campo
         }
