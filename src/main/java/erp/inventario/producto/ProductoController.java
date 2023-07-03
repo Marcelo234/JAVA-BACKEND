@@ -39,7 +39,6 @@ public class ProductoController {
     }
 
     @Operation(summary = "Obtiene todos los productos")
-    @PreAuthorize("hasAuthority('producto_leertodos')")
     @GetMapping("/")
     public List<Producto> findAll(){
         return service.findAll();
