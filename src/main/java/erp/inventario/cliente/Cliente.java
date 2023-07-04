@@ -15,5 +15,5 @@ public class Cliente {
     private String cedula;
     private String nombre;
     private String direccion;
-    private String correo_electronico;
+    private String correoElectronico;
 }

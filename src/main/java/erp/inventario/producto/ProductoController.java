@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,7 +66,7 @@ public class ProductoController {
     @Operation(summary = "Altualiza un producto con su id")
     @PatchMapping("/{id}/")
     public Producto partiaUpdate(@PathVariable long id, @RequestBody Map<String, Object> fields){
-        Producto producto = findById(id);
+        Producto entity = findById(id);
         
         //itera sobre los campos que se desean actualizar
         for (Map.Entry<String, Object> field : fields.entrySet()){
@@ -80,11 +79,11 @@ public class ProductoController {
             campoEntidad.setAccessible(true);
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
-            campoEntidad.set(service, mapper.convertValue(fieldValue, campoEntidad.getType()));
+            campoEntidad.set(entity, mapper.convertValue(fieldValue, campoEntidad.getType()));
         } catch (NoSuchFieldException | IllegalAccessException ex){
             //maneja la excepcion si ocurre algun erros al acceder al campo
         }
         }
-    return update(producto);
+    return update(entity);
     }
 }
