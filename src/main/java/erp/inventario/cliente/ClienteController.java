@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,8 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ClienteController {
   @Autowired
   ClienteService clienteService;
-
-  @GetMapping()
+  
+  @PreAuthorize("hasAuthority('Cliente_Vertodo')")
+  @GetMapping("/")
   public ArrayList<Cliente> obtenerClientes() {
     return clienteService.obtenerClientes();
   }
@@ -38,7 +40,7 @@ public class ClienteController {
   public Optional<Cliente> obtenerClientePorId(@PathVariable("id") Long id) {
     return this.clienteService.obtenerPorId(id);
   }
-  
+
   @GetMapping("/query")
   public ArrayList<Cliente> obternerPorPrioridad(@RequestParam("prioridad") Integer prioridad) {
     return this.clienteService.obtenerPorPrioridad(prioridad);
