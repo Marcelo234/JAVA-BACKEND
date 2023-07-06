@@ -1,41 +1,28 @@
 package erp.inventario.cliente;
 
-import java.util.ArrayList;
-import java.util.Optional;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class ClienteService {
-  @Autowired
-  ClienteRepository clienteRepository;
 
-  public ArrayList<Cliente> obtenerClientes() {
-    return (ArrayList<Cliente>) clienteRepository.findAll();
-  }
+    @Autowired
+    ClienteRepository repository;
 
-  // Save User
-  public Cliente guardarCliente(Cliente cliente) {
-    return clienteRepository.save(cliente);
-  }
-
-  // Get for Id
-  public Optional<Cliente> obtenerPorId(Long id) {
-    return clienteRepository.findById(id);
-  }
-
-  public ArrayList<Cliente> obtenerPorPrioridad(Integer prioridad) {
-    return clienteRepository.findByPrioridad(prioridad);
-  }
-
-  public boolean eliminarCliente(Long id) {
-    try {
-      clienteRepository.deleteById(id);
-      return true;
-    } catch (Exception e) {
-      return false;
+    public Cliente save( Cliente entity){
+        return repository.save(entity);
     }
-  }
+    
+    public void deleteById(long id){
+        repository.deleteById(id);
+    }
+
+    public Cliente findById(long id){
+        return repository.findById(id).orElse(null);
+    }
+
+    public List<Cliente> findAll(){
+        return repository.findAll();
+    }
 }

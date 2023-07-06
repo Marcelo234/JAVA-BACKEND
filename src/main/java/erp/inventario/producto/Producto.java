@@ -17,7 +17,6 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.AUTO )
     private long id;
     private String nombre;
-    private String descripcion;
     private double precioUnitario;
     
     @ManyToOne

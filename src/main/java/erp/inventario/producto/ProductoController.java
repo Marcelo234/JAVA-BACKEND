@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -63,7 +66,7 @@ public class ProductoController {
     @Operation(summary = "Altualiza un producto con su id")
     @PatchMapping("/{id}/")
     public Producto partiaUpdate(@PathVariable long id, @RequestBody Map<String, Object> fields){
-        Producto producto = findById(id);
+        Producto entity = findById(id);
         
         //itera sobre los campos que se desean actualizar
         for (Map.Entry<String, Object> field : fields.entrySet()){
@@ -74,11 +77,13 @@ public class ProductoController {
         try {
             Field campoEntidad = Producto.class.getDeclaredField(fieldName);
             campoEntidad.setAccessible(true);
-            campoEntidad.set(producto, fieldValue);
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            campoEntidad.set(entity, mapper.convertValue(fieldValue, campoEntidad.getType()));
         } catch (NoSuchFieldException | IllegalAccessException ex){
             //maneja la excepcion si ocurre algun erros al acceder al campo
         }
         }
-    return update(producto);
+    return update(entity);
     }
 }

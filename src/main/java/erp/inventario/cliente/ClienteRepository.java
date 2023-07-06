@@ -1,11 +1,7 @@
 package erp.inventario.cliente;
 
-import java.util.ArrayList;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-
-
-@Repository
-public interface ClienteRepository extends CrudRepository<Cliente, Long> {
-  public abstract ArrayList<Cliente> findByPrioridad(Integer prioridad);
+public interface ClienteRepository extends CrudRepository <Cliente, Long> {
+    List<Cliente> findAll();  
 }
